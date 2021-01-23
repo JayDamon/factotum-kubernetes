@@ -11,9 +11,9 @@ spec:
     metadata:
       labels:
         app: add-to-plex-client
-      spec:
-        containers:
-        - name: add-to-plex-client
-          image: repository.factotumsoftware.com/add-to-plex:0.0.0
-          ports:
-          - containerPort: 80
+    spec:
+      containers:
+      - name: add-to-plex-client
+        image: repository.factotumsoftware.com/add-to-plex:0.0.0
+        ports:
+        - containerPort: 80
