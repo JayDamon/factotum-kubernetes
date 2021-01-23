@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: add-to-plex-client-deployment
+spec:
+  selector:
+    matchLabels:
+      app: add-to-plex
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: add-to-plex-client
+      spec:
+        containers:
+        - name: add-to-plex-client
+          image: repository.factotumsoftware.com/add-to-plex:0.0.0
+          ports:
+          - containerPort: 80
