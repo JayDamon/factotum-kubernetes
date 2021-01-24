@@ -1,3 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: add-to-plex
+  labels:
+    run: add-to-plex
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+  selector:
+    run: add-to-plex
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -19,16 +32,3 @@ spec:
         - containerPort: 80
       imagePullSecrets:
       - name: regcred
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: add-to-plex
-  labels:
-    run: add-to-plex
-spec:
-  ports:
-  - port: 80
-    protocol: TCP
-  selector:
-    run: add-to-plex
