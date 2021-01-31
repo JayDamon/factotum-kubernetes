@@ -14,16 +14,16 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: add-to-plex-client-deployment
+  name: add-to-plex
 spec:
   selector:
     matchLabels:
-      app: add-to-plex
+      run: add-to-plex
   replicas: 1
   template:
     metadata:
       labels:
-        app: add-to-plex
+        run: add-to-plex
     spec:
       containers:
       - name: add-to-plex-client
