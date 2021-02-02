@@ -27,7 +27,7 @@ spec:
     spec:
       containers:
       - name: add-to-plex-client
-        image: repository.factotumsoftware.com/add-to-plex:0.0.0
+        image: repository.factotumsoftware.com/dev-add-to-plex:0.0.0
         ports:
         - containerPort: 80
       imagePullSecrets:
