@@ -27,7 +27,7 @@ spec:
     spec:
       containers:
       - name: plex-back-end
-        image: repository.factotumsoftware.com/plex-backend:0.0.1-SNAPSHOT
+        image: repository.factotumsoftware.com/plex-backend:0.0.2-SNAPSHOT
         ports:
         - containerPort: 8080
         env:

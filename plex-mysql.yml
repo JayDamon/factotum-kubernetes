@@ -40,6 +40,6 @@ spec:
         - name: plex-mysql-volume
           mountPath: /var/lib/mysql
       volumes:
-      - name: lex-mysql-volume
+      - name: plex-mysql-volume
         persistentVolumeClaim:
           claimName: plex-mysql-pv-claim
