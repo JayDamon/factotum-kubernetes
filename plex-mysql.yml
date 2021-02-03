@@ -1,0 +1,45 @@
+# TODO: THIS IS NOT YET WORKING, DO NOT USE
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: plex-mysql
+spec:
+  ports:
+  - port: 3306
+  selector:
+    app: plex-mysql
+  clusterIP: None
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: plex-mysql
+spec:
+  selector:
+    matchLabels:
+      app: plex-mysql
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: plex-mysql
+    spec:
+      containers:
+      - image: mysql:5.6
+        name: mysql
+        env:
+          # Use secret in real usage
+        - name: MYSQL_ROOT_PASSWORD
+          value: password
+        ports:
+        - containerPort: 3306
+          name: plex-mysql
+        volumeMounts:
+        - name: plex-mysql-volume
+          mountPath: /var/lib/mysql
+      volumes:
+      - name: lex-mysql-volume
+        persistentVolumeClaim:
+          claimName: plex-mysql-pv-claim
