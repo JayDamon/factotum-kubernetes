@@ -1,32 +1,32 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: add-to-plex
+  name: add-to-plex-dev
   labels:
-    run: add-to-plex
+    run: add-to-plex-dev
 spec:
   ports:
   - port: 80
     protocol: TCP
   selector:
-    run: add-to-plex
+    run: add-to-plex-dev
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: add-to-plex
+  name: add-to-plex-dev
 spec:
   selector:
     matchLabels:
-      run: add-to-plex
+      run: add-to-plex-dev
   replicas: 1
   template:
     metadata:
       labels:
-        run: add-to-plex
+        run: add-to-plex-dev
     spec:
       containers:
-      - name: add-to-plex-client
+      - name: add-to-plex-dev
         image: repository.factotumsoftware.com/dev-add-to-plex:0.0.0
         ports:
         - containerPort: 80
