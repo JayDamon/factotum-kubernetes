@@ -1,32 +1,37 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: add-to-plex-dev
-  labels:
-    run: add-to-plex-dev
+  name: movie-catalog-service
 spec:
-  ports:
-  - port: 80
-    protocol: TCP
   selector:
-    run: add-to-plex-dev
----
+    app: movie-catalog
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+      nodePort: 30001
+
+--- 
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: add-to-plex-dev
+  name: movie-catalog
+  labels:
+    app: movie-catalog
 spec:
+  replicas: 1
   selector:
     matchLabels:
-      run: add-to-plex-dev
-  replicas: 1
+      app: movie-catalog
   template:
     metadata:
       labels:
-        run: add-to-plex-dev
+        app: movie-catalog
     spec:
       containers:
-      - name: add-to-plex-dev
+      - name: movie-catalog
         image: repository.factotumsoftware.com/dev-add-to-plex:0.0.0
         ports:
         - containerPort: 80

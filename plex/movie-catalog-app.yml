@@ -1,0 +1,108 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: movie-storage-service
+spec:
+  selector:
+    app: movie-storage
+  type: LoadBalancer  
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-service
+spec:
+  selector:
+    app: mysql
+  ports:
+    - protocol: TCP
+      port: 3306
+      targetPort: 3306
+      
+---
+    
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: movie-storage
+  labels: 
+    app: movie-storage
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: movie-storage
+  template:
+    metadata:
+      labels:
+        app: movie-storage
+    spec:
+      containers:
+        - name: movie-storage
+          image: repository.factotumsoftware.com/plex-backend:0.0.4-SNAPSHOT
+          ports:
+          - containerPort: 8080
+          env:
+          - name: SPRING_PROFILES_ACTIVE
+            value: dev_mysql
+      imagePullSecrets:
+      - name: regcred
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+      - image: mysql:5.6
+        name: mysql
+        ports:
+        - containerPort: 3306
+          name: mysql        
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: password
+        - name: MYSQL_DATABASE
+          value: plex_app_dev
+        volumeMounts:
+        - name: mysql-persistent-storage
+          mountPath: /var/lib/mysql
+      volumes:
+      - name: mysql-persistent-storage
+        persistentVolumeClaim:
+          claimName: mysql-pv-claim
+
+---
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mysql-pv-claim
+spec:
+  # storageClassName: manual
+  # volumeName: mysql-pv-volume
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi 

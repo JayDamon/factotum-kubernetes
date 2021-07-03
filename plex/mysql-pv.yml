@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mysql-pv-volume
+  labels:
+    type: local
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 2Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  nfs:
+    # path: C:\Users\jaynd\db
+    path: /C/Users/jaynd/db
+    # server: 154.21.21.179
+    server: 1172.16.0.1
+    # server: host.docker.internal
+    readOnly: false
+  # hostPath:
+  #   path: "/mnt/data"

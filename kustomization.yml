@@ -1,4 +1,0 @@
-secretGenerator:
-- name: mysql-root-pass
-  files:
-  - password.txt
