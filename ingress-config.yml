@@ -15,7 +15,10 @@ spec:
             name: movie-catalog-service
             port: 
               number: 80
-      - path: /plex
+  - host: pb-dev.factotumsoftware.com
+    http:
+      paths:
+      - path: /
         backend:
           service:
             name: movie-storage-service
