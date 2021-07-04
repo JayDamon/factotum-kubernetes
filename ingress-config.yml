@@ -2,6 +2,8 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: http-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/enable-cors: "true"
 spec:
   rules:
   - host: plex-dev.factotumsoftware.com
@@ -9,9 +11,13 @@ spec:
       paths:
       - path: /
         backend:
-          serviceName: movie-catalog-service
-          servicePort: 80
+          service:
+            name: movie-catalog-service
+            port: 
+              number: 80
       - path: /plex
         backend:
-          serviceName: movie-storage-service
-          servicePort: 8080
+          service:
+            name: movie-storage-service
+            port: 
+              number: 8080
