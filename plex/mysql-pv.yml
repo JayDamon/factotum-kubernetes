@@ -12,11 +12,8 @@ spec:
     - ReadWriteMany
   persistentVolumeReclaimPolicy: Retain
   nfs:
-    # path: C:\Users\jaynd\db
-    path: /C/Users/jaynd/db
-    # server: 154.21.21.179
-    server: 1172.16.0.1
-    # server: host.docker.internal
+    path: /var/lib/mysql-plex-dev
+    server:  172.16.0.7
     readOnly: false
-  # hostPath:
-  #   path: "/mnt/data"
+  hostPath:
+    path: "/mnt/data"

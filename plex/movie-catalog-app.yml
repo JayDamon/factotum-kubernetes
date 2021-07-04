@@ -45,7 +45,7 @@ spec:
     spec:
       containers:
         - name: movie-storage
-          image: repository.factotumsoftware.com/plex-backend:0.0.4-SNAPSHOT
+          image: repository.factotumsoftware.com/plex-backend:0.0.6-SNAPSHOT
           ports:
           - containerPort: 8080
           env:
@@ -99,8 +99,8 @@ kind: PersistentVolumeClaim
 metadata:
   name: mysql-pv-claim
 spec:
-  # storageClassName: manual
-  # volumeName: mysql-pv-volume
+  storageClassName: manual
+  volumeName: mysql-pv-volume
   accessModes:
   - ReadWriteMany
   resources:
