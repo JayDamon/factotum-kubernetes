@@ -36,3 +36,13 @@ spec:
             name: jenkins-service
             port:
               number: 8080
+  - host: repository.factotumsoftware.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: repository-service
+            port:
+              number: 5000
