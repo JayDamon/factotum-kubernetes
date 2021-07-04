@@ -1,6 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: plex-configmap
-data:
-  db_host: moviedb-service

@@ -13,20 +13,6 @@ spec:
 
 ---
 
-apiVersion: v1
-kind: Service
-metadata:
-  name: mysql-service
-spec:
-  selector:
-    app: mysql
-  ports:
-    - protocol: TCP
-      port: 3306
-      targetPort: 3306
-      
----
-    
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -45,64 +31,41 @@ spec:
     spec:
       containers:
         - name: movie-storage
-          image: repository.factotumsoftware.com/plex-backend:0.0.6-SNAPSHOT
+          image: repository.factotumsoftware.com/plex-backend:0.0.7-SNAPSHOT
           ports:
           - containerPort: 8080
           env:
           - name: SPRING_PROFILES_ACTIVE
-            value: dev_mysql
+            value: dev
       imagePullSecrets:
       - name: regcred
 
 ---
 
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: v1
+kind: Service
 metadata:
-  name: mysql
+  name: plex-mysql-service
 spec:
-  replicas: 1
   selector:
-    matchLabels:
-      app: mysql
-  template:
-    metadata:
-      labels:
-        app: mysql
-    spec:
-      containers:
-      - image: mysql:5.6
-        name: mysql
-        ports:
-        - containerPort: 3306
-          name: mysql        
-        env:
-        - name: MYSQL_ROOT_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: mysql-secret
-              key: password
-        - name: MYSQL_DATABASE
-          value: plex_app_dev
-        volumeMounts:
-        - name: mysql-persistent-storage
-          mountPath: /var/lib/mysql
-      volumes:
-      - name: mysql-persistent-storage
-        persistentVolumeClaim:
-          claimName: mysql-pv-claim
-
+    app: mysql
+  clusterIP: None
+  ports:
+  - port: 3306
+      
 ---
 
+kind: Endpoints
 apiVersion: v1
-kind: PersistentVolumeClaim
 metadata:
-  name: mysql-pv-claim
-spec:
-  storageClassName: manual
-  volumeName: mysql-pv-volume
-  accessModes:
-  - ReadWriteMany
-  resources:
-    requests:
-      storage: 1Gi 
+  name: plex-mysql-service
+subsets:
+  - addresses:
+        - ip: 172.16.0.7
+    ports:
+      - port: 3306
+        name: plex-mysql-service
+
+
+
+    
