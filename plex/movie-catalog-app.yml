@@ -47,16 +47,15 @@ kind: Service
 metadata:
   name: plex-mysql-service
 spec:
-  selector:
-    app: mysql
-  clusterIP: None
   ports:
-  - port: 3306
+  - protocol: TCP
+    port: 3306
+    targetPort: 3306
       
 ---
 
-kind: Endpoints
 apiVersion: v1
+kind: Endpoints
 metadata:
   name: plex-mysql-service
 subsets:
@@ -64,7 +63,6 @@ subsets:
         - ip: 172.16.0.7
     ports:
       - port: 3306
-        name: plex-mysql-service
 
 
 
