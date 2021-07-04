@@ -31,7 +31,7 @@ spec:
     spec:
       containers:
         - name: movie-storage
-          image: repository.factotumsoftware.com/plex-backend:0.0.7-SNAPSHOT
+          image: repository.factotumsoftware.com/plex-backend:0.0.8-SNAPSHOT
           ports:
           - containerPort: 8080
           env:
