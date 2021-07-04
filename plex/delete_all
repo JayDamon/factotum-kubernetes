@@ -1,7 +1,0 @@
-kubectl delete -f plex-configmap.yml
-
-kubectl delete -f mysql-pv.yml
-
-kubectl delete -f movie-catalog-app.yml
-
-kubectl delete -f plex-dev-client.yml
