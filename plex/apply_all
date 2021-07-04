@@ -1,0 +1,7 @@
+kubectl apply -f plex-configmap.yml
+
+kubectl apply -f mysql-pv.yml
+
+kubectl apply -f movie-catalog-app.yml
+
+kubectl apply -f plex-dev-client.yml
