@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: media-client-config
+data:
+  configuration.json: |
+    resourceServer=https://pb-dev.factotumsoftware.com
