@@ -80,7 +80,7 @@ spec:
     spec:
       containers:
         - name: media-storage
-          image: repository.factotumsoftware.com/plex-backend:0.0.9-SNAPSHOT
+          image: repo.treescale.com/jaydamon/media-storage:0.1.1
           ports:
           - containerPort: 8080
           env:
@@ -89,6 +89,16 @@ spec:
                 configMapKeyRef:
                   name: media-config
                   key: profile-active
+          - name: DB_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: media-storage-mysql-secret
+                key: username
+          - name: DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: media-storage-mysql-secret
+                key: password
       imagePullSecrets:
       - name: regcred
 
