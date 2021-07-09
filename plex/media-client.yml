@@ -32,7 +32,7 @@ spec:
     spec:
       containers:
       - name: movie-catalog
-        image: repository.factotumsoftware.com/dev-add-to-plex:0.0.0
+        image: repo.treescale.com/jaydamon/media-catalog:0.1.16
         ports:
         - containerPort: 80
         volumeMounts:
@@ -41,6 +41,6 @@ spec:
       volumes:
         - name: config-volume
           configMap:
-            name: media-client-config
+            name: media-config
       imagePullSecrets:
       - name: regcred

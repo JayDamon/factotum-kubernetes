@@ -1,10 +1,59 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: movie-storage-service
+  name: movie-catalog-service
 spec:
   selector:
-    app: movie-storage
+    app: movie-catalog
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+      nodePort: 30001
+
+--- 
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: movie-catalog
+  labels:
+    app: movie-catalog
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: movie-catalog
+  template:
+    metadata:
+      labels:
+        app: movie-catalog
+    spec:
+      containers:
+      - name: movie-catalog
+        image: repo.treescale.com/jaydamon/media-catalog:0.1.16
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: config-volume
+          mountPath: /usr/share/nginx/html/assets/config
+      volumes:
+        - name: config-volume
+          configMap:
+            name: media-config
+      imagePullSecrets:
+      - name: regcred
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: media-storage-service
+spec:
+  selector:
+    app: media-storage
   type: LoadBalancer  
   ports:
     - protocol: TCP
@@ -16,27 +65,30 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: movie-storage
+  name: media-storage
   labels: 
-    app: movie-storage
+    app: media-storage
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: movie-storage
+      app: media-storage
   template:
     metadata:
       labels:
-        app: movie-storage
+        app: media-storage
     spec:
       containers:
-        - name: movie-storage
+        - name: media-storage
           image: repository.factotumsoftware.com/plex-backend:0.0.9-SNAPSHOT
           ports:
           - containerPort: 8080
           env:
           - name: SPRING_PROFILES_ACTIVE
-            value: dev
+            valueFrom:
+                configMapKeyRef:
+                  name: media-config
+                  key: profile-active
       imagePullSecrets:
       - name: regcred
 

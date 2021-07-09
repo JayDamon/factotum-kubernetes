@@ -2,6 +2,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: http-ingress
+  namespace: media-dev
   annotations:
     nginx.ingress.kubernetes.io/enable-cors: "true"
 spec:
@@ -26,23 +27,35 @@ spec:
             name: movie-storage-service
             port: 
               number: 8080
-  - host: jenkins.factotumsoftware.com
+
+--- 
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: http-ingress
+  namespace: media-prod
+  annotations:
+    nginx.ingress.kubernetes.io/enable-cors: "true"
+spec:
+  rules:
+  - host: plex.factotumsoftware.com
     http:
       paths:
       - path: /
         pathType: Prefix
         backend:
           service:
-            name: jenkins-service
-            port:
+            name: movie-catalog-service
+            port: 
+              number: 80
+  - host: pb.factotumsoftware.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: movie-storage-service
+            port: 
               number: 8080
-  - host: repository.factotumsoftware.com
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: repository-service
-            port:
-              number: 5000

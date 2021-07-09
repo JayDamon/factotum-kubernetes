@@ -2,6 +2,24 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: media-client-config
+  namespace: media-prod
 data:
+  profile-active: prod
   configuration.json: |
-    resourceServer=https://pb-dev.factotumsoftware.com
+    {
+      "resourceServer":"https://pb.factotumsoftware.com"
+    }
+
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: media-config
+  namespace: media-dev
+data:
+  profile-active: dev
+  configuration.json: |
+    {
+      "resourceServer":"https://pb-dev.factotumsoftware.com"
+    }
