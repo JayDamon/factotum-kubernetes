@@ -1,0 +1,57 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: media-dev-certificate
+  namespace: media-dev
+spec:
+  dnsNames:
+    - plex-dev.factotumsoftware.com
+  secretName: media-dev-issuer-key
+  issuerRef:
+    name: factotum-issuer
+    kind: ClusterIssuer
+
+--- 
+
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: pb-dev-certificate
+  namespace: media-dev
+spec:
+  dnsNames:
+    - pb-dev.factotumsoftware.com
+  secretName: mb-dev-issuer-key
+  issuerRef:
+    name: factotum-issuer
+    kind: ClusterIssuer
+
+---
+
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: media-certificate
+  namespace: media-prod
+spec:
+  dnsNames:
+    - plex.factotumsoftware.com
+  secretName: media-issuer-key
+  issuerRef:
+    name: factotum-issuer
+    kind: ClusterIssuer
+    
+--- 
+
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: pb-certificate
+  namespace: media-prod
+spec:
+  dnsNames:
+    - pb.factotumsoftware.com
+  secretName: mb-issuer-key
+  issuerRef:
+    name: factotum-issuer
+    kind: ClusterIssuer

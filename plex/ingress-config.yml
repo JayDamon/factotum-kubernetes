@@ -6,6 +6,13 @@ metadata:
   annotations:
     nginx.ingress.kubernetes.io/enable-cors: "true"
 spec:
+  tls:
+  - hosts:
+    - plex-dev.factotumsoftware.com
+      secretName: media-dev-issuer-key
+  - hosts:
+    - pb-dev.factotumsoftware.com
+      secretName: mb-dev-issuer-key
   rules:
   - host: plex-dev.factotumsoftware.com
     http:
@@ -38,6 +45,13 @@ metadata:
   annotations:
     nginx.ingress.kubernetes.io/enable-cors: "true"
 spec:
+  tls:
+  - hosts:
+    - plex.factotumsoftware.com
+      secretName: media-issuer-key
+  - hosts:
+    - pb.factotumsoftware.com
+      secretName: mb-issuer-key
   rules:
   - host: plex.factotumsoftware.com
     http:
