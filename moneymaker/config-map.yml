@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: moneymaker-config
-  namespace: media-prod
+  namespace: mm-prod
 data:
   profile-active: prod
   configuration.json: |
@@ -16,7 +16,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: moneymaker-config
-  namespace: media-dev
+  namespace: mm-dev
 data:
   profile-active: dev
   configuration.json: |

@@ -16,7 +16,7 @@ fi
 
 echo "Launching app in env $namespace"
 
-kubectl apply -f envs.yml
+kubectl apply -f namespaces.yml
 
 kubectl apply -f config-map.yml
 
