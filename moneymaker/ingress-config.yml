@@ -2,7 +2,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: http-ingress
-  namespace: moneymaker-dev
+  namespace: mm-dev
   annotations:
     nginx.ingress.kubernetes.io/enable-cors: "true"
 spec:
@@ -41,7 +41,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: http-ingress
-  namespace: moneymaker-prod
+  namespace: mm-prod
   annotations:
     nginx.ingress.kubernetes.io/enable-cors: "true"
 spec:

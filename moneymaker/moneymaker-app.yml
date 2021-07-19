@@ -102,7 +102,7 @@ spec:
     app: moneymaker-admin
   type: Loadbalancer
   ports:
-    - protoco: TCP
+    - protocol: TCP
       port: 8079
       targetPort: 8079
 
