@@ -103,8 +103,8 @@ spec:
   type: LoadBalancer
   ports:
     - protocol: TCP
-      port: 8079
-      targetPort: 8079
+      port: 8761
+      targetPort: 8761
 
 --- 
 
@@ -128,7 +128,7 @@ spec:
         - name: moneymaker-admin
           image: repo.treescale.com/jaydamon/mm-ellone-admin:latest
           ports:
-          - containerPort: 8079
+          - containerPort: 8761
           env:
           - name: SPRING_PROFILES_ACTIVE
             valueFrom:

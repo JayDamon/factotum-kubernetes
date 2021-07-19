@@ -12,7 +12,10 @@ spec:
     secretName: moneymaker-dev-issuer-key
   - hosts:
     - mm-gateway-dev.factotumsoftware.com
-    secretName: mm-dev-issuer-key
+    secretName: mm-gateway-dev-issuer-key
+  - hosts:
+    - mm-admin-dev.factotumsoftware.com
+    secretName: mm-admin-dev-issuer-key
   rules:
   - host: moneymaker-dev.factotumsoftware.com
     http:
@@ -34,6 +37,16 @@ spec:
             name: moneymaker-gateway-service
             port:
               number: 8080
+  - host: mm-admin-dev.factotumsoftware.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: moneymaker-admin-service
+            port:
+              number: 8761
 
 ---
 
@@ -51,7 +64,10 @@ spec:
     secretName: moneymaker-prod-issuer-key
   - hosts:
     - mm-gateway.factotumsoftware.com
-    secretName: mm-prod-issuer-key
+    secretName: mm-gateway-issuer-key
+  - hosts:
+    - mm-admin.factotumsoftware.com
+    secretName: mm-admin-issuer-key
   rules:
   - host: moneymaker.factotumsoftware.com
     http:
@@ -73,3 +89,14 @@ spec:
             name: moneymaker-gateway-service
             port:
               number: 8080
+  - host: mm-admin.factotumsoftware.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: moneymaker-admin-service
+            port:
+              number: 8761
+
