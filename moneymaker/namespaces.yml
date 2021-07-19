@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: moneymaker-dev
+  name: mm-dev
 
 ---
 
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: moneymaker-prod
+  name: mm-prod
