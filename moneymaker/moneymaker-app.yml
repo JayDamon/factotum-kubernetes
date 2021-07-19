@@ -1,6 +1,54 @@
 apiVersion: v1
 kind: Service
 metadata:
+  name: cid-moneymaker-client-service
+spec:
+  selector:
+    app: moneymaker
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: moneymaker
+  labels:
+    app: moneymaker
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: moneymaker
+  template:
+    metadata:
+      labels:
+        app: moneymaker
+    spec:
+      containers:
+      - name: moneymaker 
+        image: repo.treescale.com/jaydamon/mm-cid-client:latest
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: config-volume
+          mountPath: /usr/share/nginx/html/assets/config
+      volumes:
+        - name: config-volume
+          configMap:
+            name: moneymaker-config
+      imagePullSecrets:
+      - name: regcred
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
   name: moneymaker-gateway-service
 spec:
   selector:
@@ -31,9 +79,15 @@ spec:
     spec:
       containers:
         - name: moneymaker-gateway
-          image: repository.factotumsoftware.com/gateway:0.0.1-SNAPSHOT
+          image: repo.treescale.com/jaydamon/mm-gateway:latest
           ports:
           - containerPort: 8080
+          env:
+          - name: SPRING_PROFILES_ACTIVE
+            valueFrom:
+                configMapKeyRef:
+                  name: moneymaker-config
+                  key: profile-active
       imagePullSecrets:
       - name: regcred
 
@@ -72,8 +126,14 @@ spec:
     spec:
       containers:
         - name: moneymaker-admin
-          image: repository.factotumsoftware.com/garnet-admin:0.0.1-SNAPSHOT
+          image: repo.treescale.com/jaydamon/mm-ellone-admin:latest
           ports:
           - containerPort: 8079
+          env:
+          - name: SPRING_PROFILES_ACTIVE
+            valueFrom:
+                configMapKeyRef:
+                  name: moneymaker-config
+                  key: profile-active
       imagePullSecrets:
       - name: regcred

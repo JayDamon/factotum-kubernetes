@@ -1,0 +1,75 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: http-ingress
+  namespace: moneymaker-dev
+  annotations:
+    nginx.ingress.kubernetes.io/enable-cors: "true"
+spec:
+  tls:
+  - hosts:
+    - monemaker-dev.factotumsoftware.com
+    secretName: moneymaker-dev-issuer-key
+  - hosts:
+    - mm-gateway-dev.factotumsoftware.com
+    secretName: mm-dev-issuer-key
+  rules:
+  - host: moneymaker-dev.factotumsoftware.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: moneymaker-client-service
+            port:
+              number: 80
+  - host: mm-gateway-dev.factotumsoftware.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: moneymaker-gateway-service
+            port:
+              number: 8080
+
+---
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: http-ingress
+  namespace: moneymaker-prod
+  annotations:
+    nginx.ingress.kubernetes.io/enable-cors: "true"
+spec:
+  tls:
+  - hosts:
+    - monemaker.factotumsoftware.com
+    secretName: moneymaker-prod-issuer-key
+  - hosts:
+    - mm-gateway.factotumsoftware.com
+    secretName: mm-prod-issuer-key
+  rules:
+  - host: moneymaker.factotumsoftware.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: moneymaker-client-service
+            port:
+              number: 80
+  - host: mm-gateway.factotumsoftware.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: moneymaker-gateway-service
+            port:
+              number: 8080

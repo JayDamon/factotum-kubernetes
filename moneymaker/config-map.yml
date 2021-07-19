@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: moneymaker-config
+  namespace: media-prod
+data:
+  profile-active: prod
+  configuration.json: |
+    {
+      "resourceServer":"https://pb.factotumsoftware.com"
+    }
+
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: moneymaker-config
+  namespace: media-dev
+data:
+  profile-active: dev
+  configuration.json: |
+    {
+      "resourceServer":"https://mm-gateway.factotumsoftware.com"
+    }
