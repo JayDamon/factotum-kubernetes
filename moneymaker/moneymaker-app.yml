@@ -100,7 +100,7 @@ metadata:
 spec:
   selector:
     app: moneymaker-admin
-  type: Loadbalancer
+  type: LoadBalancer
   ports:
     - protocol: TCP
       port: 8079
