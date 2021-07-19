@@ -22,6 +22,6 @@ kubectl apply -f config-map.yml
 
 kubectl apply -f moneymaker-certs.yml
 
-kubectl apply -f moneymaker-app.yml -n=$namespace
+kubectl apply -f moneymaker-app.yml -n $namespace
 
 kubectl apply -f ingress-config.yml
