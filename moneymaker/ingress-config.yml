@@ -46,7 +46,7 @@ spec:
           service:
             name: moneymaker-admin-service
             port:
-              number: 8761
+              number: 8079
 
 ---
 
@@ -98,5 +98,5 @@ spec:
           service:
             name: moneymaker-admin-service
             port:
-              number: 8761
+              number: 8079
 
