@@ -126,7 +126,7 @@ spec:
     spec:
       containers:
         - name: moneymaker-admin
-          image: repo.treescale.com/jaydamon/mm-ellone-admin:latest
+          image: repo.treescale.com/jaydamon/mm-garnet-admin:latest
           ports:
           - containerPort: 8761
           env:
